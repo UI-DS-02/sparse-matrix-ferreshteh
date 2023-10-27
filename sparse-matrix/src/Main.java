@@ -31,7 +31,7 @@ public class Main {
         System.out.println(" Enter nodes ");
         // sc.nextLine();
         // Enter row
-       
+
             matrix.addRow(1, 0, 0);
             matrix.addRow(2, 0, 1);
             matrix.addRow(3, 0, 2);
@@ -40,7 +40,16 @@ public class Main {
             matrix.addRow(6, 1, 2);
             matrix.addRow(8, 1, 1);
 
-
+            matrix.addColumn(1,0,0);
+            matrix.addColumn(2,1,0);
+            matrix.addColumn(3,2,0);
+            matrix.addColumn(4,0,1);
+            matrix.addColumn(5,1,1);
+            matrix.addColumn(6,2,1);
+            matrix.addColumn(7,0,2);
+            matrix.addColumn(8,1,2);
+            matrix.addColumn(9,2,2);
+            matrix.addColumn(10,2,2);
 
 
 
@@ -134,6 +143,47 @@ class Matrix {
                 }
             }
         }
+
+    }
+    public void addColumn(int value, int index_row, int index_column){
+        DoublyLinkedList.Node node = new DoublyLinkedList.Node(value, index_row);
+        column.head=header_column[index_column];
+        if (column.head == null) {
+            column.head = node;
+            header_column[index_column]=node;
+            column.tail=node;
+            column.tail.setIndex(index_row);
+        }
+        else {
+            DoublyLinkedList.Node current = column.head;
+
+            while (current.getIndex() < index_row - 1) {
+                current = current.next_row;
+            }
+            if (current.next_row != null) {
+                DoublyLinkedList.Node next = current.next_row;
+                node.next_row = next;
+            }
+            current.next_row = node;
+            column.tail=node;
+            column.tail.setIndex(index_row);
+        }
+        if (index_column != 0) {
+            column.head = header_column[index_column - 1];
+            DoublyLinkedList.Node current = column.head;
+            while (current!=null && node!=null){
+                if (current.getIndex() == node.getIndex()) {
+                    current.next_column = node;
+                    current = current.next_row;
+                    node = node.next_row;
+                    if(node!=null)
+                        node.setIndex(node.getIndex()+1);
+                } else {
+                    current = current.next_row;
+                }
+            }
+        }
+
 
     }
 
