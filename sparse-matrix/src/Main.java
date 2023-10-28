@@ -80,6 +80,7 @@ public class Main {
 
 
         //----------------------------------------------------
+
         if (function == 1) {
             System.out.println(" data && index_row && index_column");
             int index_row = sc.nextInt();
@@ -313,12 +314,21 @@ class Matrix {
         row.head = header_row[index_row];
         DoublyLinkedList.Node current = row.head;
 
-        while (current.getIndex_column() < index_column  && current.next_column != null && current.next_column.getIndex_column() < index_column ) {
+        while (current.getIndex_column() < index_column && current.next_column != null) {
             current = current.next_column;
         }
         current.setData(data);
-    }
 
+        // for column
+        column.head=header_column[index_column];
+        current=column.head;
+
+        while (current.getIndex_row()<index_row&& current.next_row!=null){
+            current=current.next_row;
+        }
+        current.setData(data);
+
+    }
 }
 
 
