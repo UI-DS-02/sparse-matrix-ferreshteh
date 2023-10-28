@@ -33,22 +33,26 @@ public class Main {
         // Enter row
 
 
+        matrix.add(3, 1, 5);
 
-        matrix.add(3,1,5);
+        matrix.add(2, 2, 1);
 
-        matrix.add(2,2,1);
+        matrix.add(4, 1, 1);
 
-        matrix.add(4,1,1);
-
-        matrix.add(1,0,1);
+        matrix.add(1, 0, 1);
 //            matrix.addRow(4, 1, 0);
 //            matrix.addRow(6, 1, 2);
 
-        matrix.add(7,0,0);
+        matrix.add(7, 0, 0);
 
-        matrix.add(8,1,7);
+        matrix.add(8, 1, 7);
 
-        matrix.add(11,2,2);
+        matrix.add(11, 2, 2);
+        matrix.add(15,3,0);
+
+        matrix.add(18,4,2);
+        matrix.add(19,4,3);
+        matrix.add(20,4,4);
 //            matrix.addRow(5, 1, 1);
 //            matrix.addRow(10,2,2);
         //-------------------------------------------------------
@@ -80,7 +84,8 @@ public class Main {
 //        System.out.println("4" + matrix.search(4));
 //        System.out.println("3" + matrix.search(3));
 //        System.out.println("11" + matrix.search(11));
-        matrix.update(15, 1, 5);
+        //   matrix.update(15, 1, 5);
+        matrix.print_matrix();
 
         // Enter column
         //----------------------------------------------------
@@ -140,7 +145,7 @@ class Matrix {
             row.head = node;
             header_row[index_row] = node;
             row.tail = node;
-           // row.tail.setIndex_row(index_column);
+            // row.tail.setIndex_row(index_column);
         } else if (row.head.getIndex_column() > index_column) {
             node.next_column = row.head;
             row.head = node;
@@ -165,7 +170,7 @@ class Matrix {
             column.head = node;
             header_column[index_column] = node;
             column.tail = node;
-           // column.tail.setIndex_row(index_row);
+            // column.tail.setIndex_row(index_row);
         } else if (column.head.getIndex_row() > index_row) {
             node.next_row = column.head;
             column.head = node;
@@ -173,7 +178,7 @@ class Matrix {
         } else {
             DoublyLinkedList.Node current = column.head;
 
-            while (current.getIndex_row() < index_row - 1) {
+            while (current.getIndex_row() < index_row - 1&& current.next_row!=null) {
                 current = current.next_row;
             }
             if (current.next_row != null) {
@@ -184,7 +189,7 @@ class Matrix {
             }
             current.next_row = node;
             column.tail = node;
-           // column.tail.setIndex_row(index_row);
+            // column.tail.setIndex_row(index_row);
         }
 //        if (index_row != 0) {
 //            row.head = header_row[index_row - 1];
@@ -339,15 +344,58 @@ class Matrix {
 
     }
 
-    public void print() {
+    public void print_complex() {
         for (int i = 0; i < header_row.length; i++) {
             row.head = header_row[i];
-            DoublyLinkedList.Node current=row.head;
-           while (current!=null){
-               System.out.println(current.getIndex_row()+"  "+current.getIndex_column()+"  "+current.getData());
-               current=current.next_column;
-           }
+            DoublyLinkedList.Node current = row.head;
+            while (current != null) {
+                System.out.println(current.getIndex_row() + "  " + current.getIndex_column() + "  " + current.getData());
+                current = current.next_column;
+            }
 
+        }
+    }
+
+    public void print_matrix() {
+        int len;
+        for (int i = 0; i < header_row.length; i++) {
+            row.head = header_row[i];
+            if (row.head != null) {
+                DoublyLinkedList.Node pir = row.head;
+                DoublyLinkedList.Node next = row.head.next_column;
+                for (int j = 0; j < pir.getIndex_column() ; j++) {
+                    System.out.print("0" + " ");
+                }
+                System.out.print(pir.getData() + " ");
+                while (next != null) {
+                    for (int j = 0; j < next.getIndex_column() - pir.getIndex_column() - 1; j++) {
+                        System.out.print("0" + " ");
+                    }
+                    if(next!=pir)
+                        System.out.print(""+next.getData() + " ");
+                   // pir = pir.next_column;
+                    if (next.next_column == null) {
+                        for (int j = next.getIndex_column()+1; j < header_column.length ; j++) {
+                            System.out.print("0" + " ");
+                        }
+                        next = next.next_column;
+                    } else {
+                        next = next.next_column;
+                        pir=pir.next_column;
+                    }
+                }
+                if(row.head.next_column==null){
+                    for (int j = pir.getIndex_column()+1; j < header_column.length ; j++) {
+                        System.out.print("0" + " ");
+                    }
+                }
+
+            } else {
+                for (int j = 0; j < header_column.length; j++) {
+                    System.out.print("0" + " ");
+                }
+            }
+            System.out.print("\n");
         }
     }
 }
@@ -404,20 +452,6 @@ class DoublyLinkedList {
         for (int i = 1; i < column; i++) {
             privies = privies.next_row;
         }
-        // to check data
-//        if (privies.next.data == data) {
-//            temp = privies.next.next;
-//            next = privies.next.next_column;
-//            privies.next_column = next;
-//
-//            Node current_row = next;
-//            // to shift nodes of next row
-//            while (current_row.next_column != null && temp.next_column != null) {
-//                current_row.next_row = temp;
-//                temp = temp.next_column;
-//                current_row = current_row.next_column;
-//            }
-//        }
     }
     //----------------------------------------------------------------
 
