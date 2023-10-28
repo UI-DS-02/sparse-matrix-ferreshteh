@@ -1,58 +1,69 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         System.out.println(" row && column ");
-
-        int numberOf_row = sc.nextInt();
-        int numberOf_column = sc.nextInt();
+        String line;
+        Matrix matrix = null;
+        try {
+            BufferedReader bf = new BufferedReader(new FileReader("M(10,5).scv"));
+            int numberOfLines = (int) Files.lines(Path.of("M(10,5).csv")).count();
+            if ((line = bf.readLine()) != null) {
+                String[] row = line.split(",");
+                matrix = new Matrix((int) numberOfLines, row.length);
+            }
+            int lineNumber = 0;
+            while (line != null) {
+                String[] row = line.split(",");
+                for (int i = 0; i < row.length; i++) {
+                    if (Integer.parseInt(row[i]) != 0) {
+                        matrix.add(Integer.parseInt(row[i]), lineNumber, i);
+                    }
+                }
+                line = bf.readLine();
+                lineNumber++;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //----------------------------------------------------------
         System.out.println("1- add node ");
         System.out.println("2- delete node");
         System.out.println("3- search node");
         System.out.println("4- update ");
-        System.out.println("5- print");
+        System.out.println("5- compact matrix");
+        System.out.println("6- The initial matrix");
 
         int function = sc.nextInt();
-        //-----------------------------------------
-        DoublyLinkedList list1 = new DoublyLinkedList();
-        DoublyLinkedList list2 = new DoublyLinkedList();
-        DoublyLinkedList list3 = new DoublyLinkedList();
-
-        DoublyLinkedList[] row = new DoublyLinkedList[5];
-        row[1] = list1;
-        row[2] = list2;
-        row[3] = list3;
 
 
-        Matrix matrix = new Matrix(numberOf_column, numberOf_row);
-
-        //----------------------------------------------------
-        System.out.println(" Enter nodes ");
-        // sc.nextLine();
-        // Enter row
-
-
-        matrix.add(3, 1, 5);
-
-        matrix.add(2, 2, 1);
-
-        matrix.add(4, 1, 1);
-
-        matrix.add(1, 0, 1);
-//            matrix.addRow(4, 1, 0);
-//            matrix.addRow(6, 1, 2);
-
-        matrix.add(7, 0, 0);
-
-        matrix.add(8, 1, 7);
-
-        matrix.add(11, 2, 2);
-        matrix.add(15,3,0);
-
-        matrix.add(18,4,2);
-        matrix.add(19,4,3);
-        matrix.add(20,4,4);
+//        matrix.add(3, 1, 5);
+//
+//        matrix.add(2, 2, 1);
+//
+//        matrix.add(4, 1, 1);
+//
+//        matrix.add(1, 0, 1);
+////            matrix.addRow(4, 1, 0);
+////            matrix.addRow(6, 1, 2);
+//
+//        matrix.add(7, 0, 0);
+//
+//        matrix.add(8, 1, 7);
+//
+//        matrix.add(11, 2, 2);
+//        matrix.add(15, 3, 0);
+//
+//
+//        matrix.add(20, 4, 4);
+//        matrix.add(19, 4, 3);
+//        matrix.add(18, 4, 2);
 //            matrix.addRow(5, 1, 1);
 //            matrix.addRow(10,2,2);
         //-------------------------------------------------------
@@ -85,7 +96,7 @@ public class Main {
 //        System.out.println("3" + matrix.search(3));
 //        System.out.println("11" + matrix.search(11));
         //   matrix.update(15, 1, 5);
-        matrix.print_matrix();
+  //      matrix.print_matrix();
 
         // Enter column
         //----------------------------------------------------
@@ -98,27 +109,34 @@ public class Main {
             int index_row = sc.nextInt();
             int index_column = sc.nextInt();
             int data = sc.nextInt();
-            //  row[index_row][index_column].add(data, index_row, index_column);
+            assert matrix != null;
+            matrix.add(data,index_row,index_column);
         } else if (function == 2) {
             System.out.println(" data && index_row && index_column");
             int index_row = sc.nextInt();
             int index_column = sc.nextInt();
             int data = sc.nextInt();
-            // row[index_row][index_column].delete(data, index_column);
-
+            assert matrix != null;
+            matrix.add(data,index_row,index_column);
         } else if (function == 3) {
             System.out.println(" Enter data");
             int data = sc.nextInt();
-            boolean find = false;
+            assert matrix != null;
             matrix.search(data);
         } else if (function == 4) {
             System.out.println(" data && index_row && index_column");
             int index_row = sc.nextInt();
             int index_column = sc.nextInt();
             int data = sc.nextInt();
-            //  row[index_row][index_column].delete(data, index_column);
+            assert matrix != null;
+            matrix.update(data,index_row,index_column);
         } else if (function == 5) {
-
+            assert matrix != null;
+            matrix.print_complex();
+        }
+        else {
+            assert matrix != null;
+            matrix.print_matrix();
         }
     }
 
@@ -153,7 +171,7 @@ class Matrix {
         } else {
             DoublyLinkedList.Node current = row.head;
 
-            while (current.getIndex_column() < index_column - 1 && current.next_column != null && current.next_column.getIndex_column() < index_column - 1) {
+            while (current.getIndex_column() < index_column - 1 && current.next_column != null && current.next_column.getIndex_column() < index_column) {
                 current = current.next_column;
             }
             if (current.next_column != null) {
@@ -178,7 +196,7 @@ class Matrix {
         } else {
             DoublyLinkedList.Node current = column.head;
 
-            while (current.getIndex_row() < index_row - 1&& current.next_row!=null) {
+            while (current.getIndex_row() < index_row - 1 && current.next_row != null) {
                 current = current.next_row;
             }
             if (current.next_row != null) {
@@ -363,7 +381,7 @@ class Matrix {
             if (row.head != null) {
                 DoublyLinkedList.Node pir = row.head;
                 DoublyLinkedList.Node next = row.head.next_column;
-                for (int j = 0; j < pir.getIndex_column() ; j++) {
+                for (int j = 0; j < pir.getIndex_column(); j++) {
                     System.out.print("0" + " ");
                 }
                 System.out.print(pir.getData() + " ");
@@ -371,21 +389,21 @@ class Matrix {
                     for (int j = 0; j < next.getIndex_column() - pir.getIndex_column() - 1; j++) {
                         System.out.print("0" + " ");
                     }
-                    if(next!=pir)
-                        System.out.print(""+next.getData() + " ");
-                   // pir = pir.next_column;
+                    if (next != pir)
+                        System.out.print("" + next.getData() + " ");
+                    // pir = pir.next_column;
                     if (next.next_column == null) {
-                        for (int j = next.getIndex_column()+1; j < header_column.length ; j++) {
+                        for (int j = next.getIndex_column() + 1; j < header_column.length; j++) {
                             System.out.print("0" + " ");
                         }
                         next = next.next_column;
                     } else {
                         next = next.next_column;
-                        pir=pir.next_column;
+                        pir = pir.next_column;
                     }
                 }
-                if(row.head.next_column==null){
-                    for (int j = pir.getIndex_column()+1; j < header_column.length ; j++) {
+                if (row.head.next_column == null) {
+                    for (int j = pir.getIndex_column() + 1; j < header_column.length; j++) {
                         System.out.print("0" + " ");
                     }
                 }
