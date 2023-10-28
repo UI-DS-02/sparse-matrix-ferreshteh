@@ -33,27 +33,34 @@ public class Main {
         // Enter row
 
 
-        matrix.addColumn(3, 1, 5);
-        matrix.addColumn(2, 2, 1);
-        matrix.addColumn(4, 1, 1);
-        matrix.addColumn(1, 0, 1);
+
+        matrix.add(3,1,5);
+
+        matrix.add(2,2,1);
+
+        matrix.add(4,1,1);
+
+        matrix.add(1,0,1);
 //            matrix.addRow(4, 1, 0);
 //            matrix.addRow(6, 1, 2);
-        matrix.addColumn(7, 0, 0);
-        matrix.addColumn(8, 1, 7);
-        matrix.addColumn(11, 2, 2);
+
+        matrix.add(7,0,0);
+
+        matrix.add(8,1,7);
+
+        matrix.add(11,2,2);
 //            matrix.addRow(5, 1, 1);
 //            matrix.addRow(10,2,2);
         //-------------------------------------------------------
-        matrix.add(3, 1, 5);
-        matrix.add(2, 2, 1);
-        matrix.add(4, 1, 1);
-        matrix.add(1, 0, 1);
+//        matrix.add(3, 1, 5);
+//        matrix.add(2, 2, 1);
+//        matrix.add(4, 1, 1);
+//        matrix.add(1, 0, 1);
 //            matrix.addRow(4, 1, 0);
 //            matrix.addRow(6, 1, 2);
-        matrix.add(7, 0, 0);
-        matrix.add(8, 1, 7);
-        matrix.add(11, 2, 2);
+//        matrix.add(7, 0, 0);
+//        matrix.add(8, 1, 7);
+//        matrix.add(11, 2, 2);
 
         //---------------------------------------------------------
 //        matrix.addColumn(1, 0, 0);
@@ -67,13 +74,13 @@ public class Main {
 //        matrix.addColumn(5, 1, 1);
 //        matrix.addColumn(10, 2, 2);
         //-------------------------------------------------------
-       // matrix.deleteRow(0, 0);
+        // matrix.deleteRow(0, 0);
         //matrix.deleteColumn(0, 0);
 //        System.out.println("7" + matrix.search(7));
 //        System.out.println("4" + matrix.search(4));
 //        System.out.println("3" + matrix.search(3));
 //        System.out.println("11" + matrix.search(11));
-        matrix.update(15,1,5);
+        matrix.update(15, 1, 5);
 
         // Enter column
         //----------------------------------------------------
@@ -133,7 +140,7 @@ class Matrix {
             row.head = node;
             header_row[index_row] = node;
             row.tail = node;
-            row.tail.setIndex_row(index_column);
+           // row.tail.setIndex_row(index_column);
         } else if (row.head.getIndex_column() > index_column) {
             node.next_column = row.head;
             row.head = node;
@@ -150,7 +157,34 @@ class Matrix {
             }
             current.next_column = node;
             row.tail = node;
-            row.tail.setIndex_column(index_column);
+            //row.tail.setIndex_column(index_column);
+        }
+        // adding column
+        column.head = header_column[index_column];
+        if (column.head == null) {
+            column.head = node;
+            header_column[index_column] = node;
+            column.tail = node;
+           // column.tail.setIndex_row(index_row);
+        } else if (column.head.getIndex_row() > index_row) {
+            node.next_row = column.head;
+            column.head = node;
+            header_column[index_column] = node;
+        } else {
+            DoublyLinkedList.Node current = column.head;
+
+            while (current.getIndex_row() < index_row - 1) {
+                current = current.next_row;
+            }
+            if (current.next_row != null) {
+                DoublyLinkedList.Node next = current.next_row;
+                //DoublyLinkedList.Node nextColumn=current.next_column;
+                node.next_row = next;
+                //next.next_column=nextColumn;
+            }
+            current.next_row = node;
+            column.tail = node;
+           // column.tail.setIndex_row(index_row);
         }
 //        if (index_row != 0) {
 //            row.head = header_row[index_row - 1];
@@ -190,32 +224,7 @@ class Matrix {
 
     public void addColumn(int value, int index_row, int index_column) {
         DoublyLinkedList.Node node = new DoublyLinkedList.Node(value, index_row, index_column);
-        column.head = header_column[index_column];
-        if (column.head == null) {
-            column.head = node;
-            header_column[index_column] = node;
-            column.tail = node;
-            column.tail.setIndex_row(index_row);
-        } else if (column.head.getIndex_row() > index_row) {
-            node.next_row = column.head;
-            column.head = node;
-            header_column[index_column] = node;
-        } else {
-            DoublyLinkedList.Node current = column.head;
 
-            while (current.getIndex_row() < index_row - 1) {
-                current = current.next_row;
-            }
-            if (current.next_row != null) {
-                DoublyLinkedList.Node next = current.next_row;
-                //DoublyLinkedList.Node nextColumn=current.next_column;
-                node.next_row = next;
-                //next.next_column=nextColumn;
-            }
-            current.next_row = node;
-            column.tail = node;
-            column.tail.setIndex_row(index_row);
-        }
 //        DoublyLinkedList.Node temp=node;
 //        if (index_column != 0) {
 //            column.head = header_column[index_column - 1];
@@ -320,14 +329,26 @@ class Matrix {
         current.setData(data);
 
         // for column
-        column.head=header_column[index_column];
-        current=column.head;
+        column.head = header_column[index_column];
+        current = column.head;
 
-        while (current.getIndex_row()<index_row&& current.next_row!=null){
-            current=current.next_row;
+        while (current.getIndex_row() < index_row && current.next_row != null) {
+            current = current.next_row;
         }
         current.setData(data);
 
+    }
+
+    public void print() {
+        for (int i = 0; i < header_row.length; i++) {
+            row.head = header_row[i];
+            DoublyLinkedList.Node current=row.head;
+           while (current!=null){
+               System.out.println(current.getIndex_row()+"  "+current.getIndex_column()+"  "+current.getData());
+               current=current.next_column;
+           }
+
+        }
     }
 }
 
