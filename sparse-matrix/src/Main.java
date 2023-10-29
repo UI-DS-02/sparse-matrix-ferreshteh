@@ -53,7 +53,7 @@ public class Main {
                 assert matrix != null;
                 matrix.add(data, index_row, index_column);
             } else if (function == 2) {
-                System.out.println("  index_row && index_column");
+                System.out.println(" index_row && index_column");
                 int index_row = sc.nextInt();
                 int index_column = sc.nextInt();
                 assert matrix != null;
@@ -63,12 +63,12 @@ public class Main {
                 System.out.println(" Enter data");
                 int data = sc.nextInt();
                 assert matrix != null;
-                matrix.search(data);
+               System.out.println( matrix.search(data));
             } else if (function == 4) {
                 System.out.println(" data && index_row && index_column");
+                int data = sc.nextInt();
                 int index_row = sc.nextInt();
                 int index_column = sc.nextInt();
-                int data = sc.nextInt();
                 assert matrix != null;
                 matrix.update(data, index_row, index_column);
             } else if (function == 5) {
