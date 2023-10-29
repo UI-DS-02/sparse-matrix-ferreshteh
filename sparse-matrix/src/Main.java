@@ -53,12 +53,12 @@ public class Main {
                 assert matrix != null;
                 matrix.add(data, index_row, index_column);
             } else if (function == 2) {
-                System.out.println(" data && index_row && index_column");
+                System.out.println("  index_row && index_column");
                 int index_row = sc.nextInt();
                 int index_column = sc.nextInt();
-                int data = sc.nextInt();
                 assert matrix != null;
-                matrix.add(data, index_row, index_column);
+                matrix.deleteColumn(index_row,index_column);
+                matrix.deleteRow(index_row,index_column);
             } else if (function == 3) {
                 System.out.println(" Enter data");
                 int data = sc.nextInt();
@@ -297,7 +297,7 @@ class Matrix {
             for (int i = 0; i < header_row.length; i++) {
                 if (header_row[i] == null) {
                     for (int j = 0; j < header_column.length; j++) {
-                        writer.write(0 + "");
+                        writer.write(0 + ",");
                     }
 
                 } else {
@@ -312,8 +312,6 @@ class Matrix {
             ;
         }
     }
-
-
 }
 
 
@@ -408,7 +406,7 @@ class DoublyLinkedList {
                 writer.write(pointer.getData() + ",");
                 pointer = pointer.next_column;
                 if (pointer == null) {
-                    for (int j = i + 1; j > sizeOfColumn; j++) {
+                    for (int j = i + 1; j < sizeOfColumn; j++) {
                         writer.write(0 + ",");
                     }
                     return;
