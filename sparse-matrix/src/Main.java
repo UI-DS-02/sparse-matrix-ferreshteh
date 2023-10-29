@@ -1,22 +1,20 @@
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.LinkedList;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        System.out.println(" row && column ");
         String line;
         Matrix matrix = null;
         try {
-            BufferedReader bf = new BufferedReader(new FileReader("M(10,5).scv"));
+            BufferedReader bf = new BufferedReader(new FileReader("M(10,5).csv"));
             int numberOfLines = (int) Files.lines(Path.of("M(10,5).csv")).count();
             if ((line = bf.readLine()) != null) {
                 String[] row = line.split(",");
-                matrix = new Matrix((int) numberOfLines, row.length);
+                matrix = new Matrix(row.length, (int) numberOfLines);
             }
             int lineNumber = 0;
             while (line != null) {
@@ -33,113 +31,56 @@ public class Main {
             e.printStackTrace();
         }
         //----------------------------------------------------------
-        System.out.println("1- add node ");
-        System.out.println("2- delete node");
-        System.out.println("3- search node");
-        System.out.println("4- update ");
-        System.out.println("5- compact matrix");
-        System.out.println("6- The initial matrix");
+        int function = 1;
+        while (function != 7) {
+            System.out.println("1- add node ");
+            System.out.println("2- delete node");
+            System.out.println("3- search node");
+            System.out.println("4- update ");
+            System.out.println("5- compact matrix");
+            System.out.println("6- The initial matrix");
+            System.out.println("7- save");
+            function = sc.nextInt();
 
-        int function = sc.nextInt();
+            //----------------------------------------------------
+            //----------------------------------------------------
 
-
-//        matrix.add(3, 1, 5);
-//
-//        matrix.add(2, 2, 1);
-//
-//        matrix.add(4, 1, 1);
-//
-//        matrix.add(1, 0, 1);
-////            matrix.addRow(4, 1, 0);
-////            matrix.addRow(6, 1, 2);
-//
-//        matrix.add(7, 0, 0);
-//
-//        matrix.add(8, 1, 7);
-//
-//        matrix.add(11, 2, 2);
-//        matrix.add(15, 3, 0);
-//
-//
-//        matrix.add(20, 4, 4);
-//        matrix.add(19, 4, 3);
-//        matrix.add(18, 4, 2);
-//            matrix.addRow(5, 1, 1);
-//            matrix.addRow(10,2,2);
-        //-------------------------------------------------------
-//        matrix.add(3, 1, 5);
-//        matrix.add(2, 2, 1);
-//        matrix.add(4, 1, 1);
-//        matrix.add(1, 0, 1);
-//            matrix.addRow(4, 1, 0);
-//            matrix.addRow(6, 1, 2);
-//        matrix.add(7, 0, 0);
-//        matrix.add(8, 1, 7);
-//        matrix.add(11, 2, 2);
-
-        //---------------------------------------------------------
-//        matrix.addColumn(1, 0, 0);
-//        matrix.addColumn(2, 0, 1);
-//        matrix.addColumn(3, 0, 2);
-//        matrix.addColumn(4, 1, 0);
-//        matrix.addColumn(6, 1, 2);
-//        matrix.addColumn(7, 2, 0);
-//        matrix.addColumn(8, 2, 1);
-//        matrix.addColumn(9, 2, 2);
-//        matrix.addColumn(5, 1, 1);
-//        matrix.addColumn(10, 2, 2);
-        //-------------------------------------------------------
-        // matrix.deleteRow(0, 0);
-        //matrix.deleteColumn(0, 0);
-//        System.out.println("7" + matrix.search(7));
-//        System.out.println("4" + matrix.search(4));
-//        System.out.println("3" + matrix.search(3));
-//        System.out.println("11" + matrix.search(11));
-        //   matrix.update(15, 1, 5);
-  //      matrix.print_matrix();
-
-        // Enter column
-        //----------------------------------------------------
-
-
-        //----------------------------------------------------
-
-        if (function == 1) {
-            System.out.println(" data && index_row && index_column");
-            int index_row = sc.nextInt();
-            int index_column = sc.nextInt();
-            int data = sc.nextInt();
-            assert matrix != null;
-            matrix.add(data,index_row,index_column);
-        } else if (function == 2) {
-            System.out.println(" data && index_row && index_column");
-            int index_row = sc.nextInt();
-            int index_column = sc.nextInt();
-            int data = sc.nextInt();
-            assert matrix != null;
-            matrix.add(data,index_row,index_column);
-        } else if (function == 3) {
-            System.out.println(" Enter data");
-            int data = sc.nextInt();
-            assert matrix != null;
-            matrix.search(data);
-        } else if (function == 4) {
-            System.out.println(" data && index_row && index_column");
-            int index_row = sc.nextInt();
-            int index_column = sc.nextInt();
-            int data = sc.nextInt();
-            assert matrix != null;
-            matrix.update(data,index_row,index_column);
-        } else if (function == 5) {
-            assert matrix != null;
-            matrix.print_complex();
+            if (function == 1) {
+                System.out.println(" data && index_row && index_column");
+                int index_row = sc.nextInt();
+                int index_column = sc.nextInt();
+                int data = sc.nextInt();
+                assert matrix != null;
+                matrix.add(data, index_row, index_column);
+            } else if (function == 2) {
+                System.out.println(" data && index_row && index_column");
+                int index_row = sc.nextInt();
+                int index_column = sc.nextInt();
+                int data = sc.nextInt();
+                assert matrix != null;
+                matrix.add(data, index_row, index_column);
+            } else if (function == 3) {
+                System.out.println(" Enter data");
+                int data = sc.nextInt();
+                assert matrix != null;
+                matrix.search(data);
+            } else if (function == 4) {
+                System.out.println(" data && index_row && index_column");
+                int index_row = sc.nextInt();
+                int index_column = sc.nextInt();
+                int data = sc.nextInt();
+                assert matrix != null;
+                matrix.update(data, index_row, index_column);
+            } else if (function == 5) {
+                assert matrix != null;
+                matrix.print_complex();
+            } else {
+                assert matrix != null;
+                matrix.print_matrix();
+            }
         }
-        else {
-            assert matrix != null;
-            matrix.print_matrix();
-        }
+
     }
-
 }
 
 class Matrix {
@@ -245,44 +186,6 @@ class Matrix {
 //        }
     }
 
-    public void addColumn(int value, int index_row, int index_column) {
-        DoublyLinkedList.Node node = new DoublyLinkedList.Node(value, index_row, index_column);
-
-//        DoublyLinkedList.Node temp=node;
-//        if (index_column != 0) {
-//            column.head = header_column[index_column - 1];
-//            DoublyLinkedList.Node current = column.head;
-//            while (current != null && node != null) {
-//                if (current.getIndex_row() == node.getIndex_row()) {
-//                    current.next_column = node;
-//                    current = current.next_row;
-//                    node = node.next_row;
-//                    if (node != null)
-//                        node.setIndex_row(node.getIndex_row() + 1);
-//                } else {
-//                    current = current.next_row;
-//                }
-//            }
-//        }
-//        for(int i=index_column+1;i<header_column.length;i++){
-//            if(header_column[i]!=null){
-//                column.head=header_column[i];
-//                DoublyLinkedList.Node current = column.head;
-//                while (current != null && temp != null) {
-//                    if (current.getIndex_row() == temp.getIndex_row()) {
-//                        temp.next_column=current;
-//                        current = current.next_row;
-//                        temp = temp.next_row;
-////                        if (temp != null)
-////                            temp.setIndex_row(temp.getIndex_row() + 1);
-//                    } else {
-//                        current = current.next_row;
-//                    }
-//                }
-//            }
-//        }
-
-    }
 
     public void deleteRow(int index_row, int index_column) {
         row.head = header_row[index_row];
@@ -416,6 +319,32 @@ class Matrix {
             System.out.print("\n");
         }
     }
+
+    public void save() {
+        File file = new File("M(10,5).csv");
+        try {
+            FileWriter csv = new FileWriter(file);
+            PrintWriter writer = new PrintWriter(csv);
+            for (int i = 0; i < header_row.length; i++) {
+                if (header_row[i] == null) {
+                    for (int j = 0; j < header_column.length; j++) {
+                        writer.write(0 + "");
+                    }
+
+                } else {
+                    row.head = header_row[i];
+                    row.save(writer, header_column.length);
+                }
+                writer.write("\n");
+            }
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            ;
+        }
+    }
+
+
 }
 
 
@@ -501,5 +430,23 @@ class DoublyLinkedList {
 
     public void print() {
 
+    }
+
+    public void save(PrintWriter writer, int sizeOfColumn) {
+        DoublyLinkedList.Node pointer = head;
+        for (int i = 0; i < sizeOfColumn; i++) {
+            if (pointer.getIndex_column() == i) {
+                writer.write(pointer.getData() + ",");
+                pointer = pointer.next_column;
+                if (pointer == null) {
+                    for (int j = i + 1; j > sizeOfColumn; j++) {
+                        writer.write(0 + ",");
+                    }
+                    return;
+                }
+            } else {
+                writer.write(0 + ",");
+            }
+        }
     }
 }
