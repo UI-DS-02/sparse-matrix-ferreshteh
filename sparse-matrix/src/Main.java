@@ -47,9 +47,9 @@ public class Main {
 
             if (function == 1) {
                 System.out.println(" data && index_row && index_column");
+                int data = sc.nextInt();
                 int index_row = sc.nextInt();
                 int index_column = sc.nextInt();
-                int data = sc.nextInt();
                 assert matrix != null;
                 matrix.add(data, index_row, index_column);
             } else if (function == 2) {
@@ -74,9 +74,13 @@ public class Main {
             } else if (function == 5) {
                 assert matrix != null;
                 matrix.print_complex();
-            } else {
+            } else if(function==6) {
                 assert matrix != null;
                 matrix.print_matrix();
+            }
+            else if(function==7){
+                assert matrix != null;
+                matrix.save();
             }
         }
 
@@ -148,42 +152,7 @@ class Matrix {
             }
             current.next_row = node;
             column.tail = node;
-            // column.tail.setIndex_row(index_row);
         }
-//        if (index_row != 0) {
-//            row.head = header_row[index_row - 1];
-//            DoublyLinkedList.Node next;
-//            DoublyLinkedList.Node current = row.head;
-//            while (current != null && node != null) {
-//                if (current.getIndex_column() == node.getIndex_column()) {
-//                    current.next_row = node;
-//                    current = current.next_column;
-//                    node = node.next_column;
-//                    if (node != null)
-//                        node.setIndex_column(node.getIndex_column() + 1);
-//                } else {
-//                    current = current.next_column;
-//                }
-//            }
-//        }
-        //  DoublyLinkedList.Node temp=node;
-//        for(int i=index_row+1;i<header_row.length;i++){
-//            if(header_row[i]!=null){
-//                row.head=header_row[i];
-//                DoublyLinkedList.Node current = column.head;
-//                while (current != null && temp != null) {
-//                    if (current.getIndex_column() == temp.getIndex_column()) {
-//                        temp.next_row=current;
-//                        current = current.next_column;
-//                        temp = temp.next_column;
-////                        if (temp != null)
-////                            temp.setIndex_row(temp.getIndex_row() + 1);
-//                    } else {
-//                        current = current.next_column;
-//                    }
-//                }
-//            }
-//        }
     }
 
 
